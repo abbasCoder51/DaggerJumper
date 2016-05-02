@@ -1,5 +1,6 @@
 package com.daggerrunner.game.sprites;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
@@ -7,7 +8,7 @@ import com.badlogic.gdx.math.Vector3;
 
 public class Player {
     private static final int GRAVITY = -10;
-    private static final int MOVEMENT = 100;
+    private static final int MOVEMENT = 120;
     public static final int PLAYER_GROUND = 20;
     public static final int PLAYER_JUMP_COUNT = 2;
     private Rectangle bounds;
@@ -17,6 +18,9 @@ public class Player {
 
     private Vector3 position;
     private Vector3 velocity;
+    public boolean movePlayer = false;
+    public int movePlayerX;
+    public String direction;
 
     public Player (int x, int y)
     {
@@ -29,13 +33,27 @@ public class Player {
 
     public void update(float dt)
     {
-        playerAnimation.update(dt);
+        if(movePlayer){
+            playerAnimation.update(dt);
+        }
+
         if(position.y > PLAYER_GROUND)
         {
             velocity.add(0, GRAVITY, 0);
         }
         velocity.scl(dt);
-        position.add(MOVEMENT * dt, velocity.y, 0);
+
+        if(movePlayer) {
+            if(direction == "right")
+            {
+                position.add(MOVEMENT * dt, velocity.y, 0);
+            }
+            else if(direction == "left")
+            {
+                position.sub(MOVEMENT * dt, -velocity.y, 0);
+            }
+        }
+
         if(position.y < PLAYER_GROUND)
         {
             position.y = PLAYER_GROUND;
@@ -58,9 +76,19 @@ public class Player {
         return playerAnimation.getFrame();
     }
 
+    public Texture getAnimation(){
+        return animationTexture;
+    }
+
     public void jump(){
         velocity.y = 250;
         jumpCount++;
+    }
+
+    public void move(boolean move, int x, String d){
+        movePlayer = move;
+        movePlayerX = x;
+        direction = d;
     }
 
     public int jumpCount()

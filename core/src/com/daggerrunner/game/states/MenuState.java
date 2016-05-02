@@ -36,8 +36,8 @@ public class MenuState extends State{
         sb.setProjectionMatrix(cam.combined);
         sb.begin();
         sb.draw(background, 0, 0);
-        sb.draw(playBtn, cam.position.x - playBtn.getWidth() / 2, cam.position.y);
-        sb.draw(settingsBtn, cam.position.x - settingsBtn.getWidth() / 2, cam.position.y - settingsBtn.getHeight());
+        sb.draw(playBtn, cam.position.x - playBtn.getWidth() / 2, cam.position.y - playBtn.getHeight() / 2);
+//        sb.draw(settingsBtn, cam.position.x - settingsBtn.getWidth() / 2, cam.position.y - settingsBtn.getHeight());
 //        sb.draw(settingsBtn, (DaggerJumper.WIDTH /2)- (playBtn.getWidth() / 2), (DaggerJumper.HEIGHT/2) - settingsBtn.getHeight());
         sb.end();
     }
