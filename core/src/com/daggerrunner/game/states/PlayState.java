@@ -2,6 +2,7 @@ package com.daggerrunner.game.states;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
@@ -15,6 +16,7 @@ public class PlayState extends State{
     private static final int ENEMY_SPACING = 150;
     private static final int ENEMY_COUNT = 4;
     private static final int PLAYER_GROUND = 20;
+    private static final int PLAYER_POINTS = 5;
 
     private Player player;
     private Texture bg;
@@ -82,12 +84,12 @@ public class PlayState extends State{
 
         if((player.getPosition().x > (playerVec.x - playerCoordsXRight)) && (player.movePlayer == true) && (player.direction == "right"))
         {
-            player.move(false, 0, "");
+            player.move(false, 0, "right");
         }
 
         if((playerVec.x > player.getPosition().x) && (player.movePlayer == true) && (player.direction == "left"))
         {
-            player.move(false, 0, "");
+            player.move(false, 0, "left");
         }
 
 //        if(player.movePlayer)

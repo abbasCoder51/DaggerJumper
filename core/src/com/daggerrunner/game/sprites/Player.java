@@ -33,7 +33,7 @@ public class Player {
 
     public void update(float dt)
     {
-        if(movePlayer){
+        if(movePlayer || (position.y > PLAYER_GROUND)){
             playerAnimation.update(dt);
         }
 
@@ -43,7 +43,7 @@ public class Player {
         }
         velocity.scl(dt);
 
-        if(movePlayer) {
+        if(movePlayer || (position.y > PLAYER_GROUND)) {
             if(direction == "right")
             {
                 position.add(MOVEMENT * dt, velocity.y, 0);
