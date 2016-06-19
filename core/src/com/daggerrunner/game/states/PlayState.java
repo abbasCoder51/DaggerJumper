@@ -46,24 +46,17 @@ public class PlayState extends State{
     protected void handleInput() {
         if(Gdx.input.justTouched())
         {
-            // Gdx.input.getX() -> X location on screen when clicked
-//            System.out.println(Gdx.input.getX());
             if((player.getPosition().y == PLAYER_GROUND) || (player.jumpCount() < 2))
             {
                 if((Gdx.graphics.getHeight()/2) > Gdx.input.getY())
                 {
                     player.jump();
                 }
-//                player.jump();
             }
-
-//            System.out.println("Current Position x: " + player.getPosition().x);
-//            System.out.println("Target Position x: " + player.movePlayerX);
 
             // direction to move in
             playerVec = new Vector3(Gdx.input.getX(), Gdx.input.getY(),0);
             cam.unproject(playerVec);
-            System.out.println("Screen Clicked x: " + playerVec.x);
 
             if(player.getPosition().x < (playerVec.x - playerCoordsXRight)){
                 System.out.println("Move to right");
@@ -72,7 +65,6 @@ public class PlayState extends State{
                 System.out.println("Move to left");
                 player.move(true, (int) (playerVec.x - playerCoordsXRight), "left");
             }
-
         }
     }
 
