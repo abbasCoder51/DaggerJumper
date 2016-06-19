@@ -24,9 +24,10 @@ public class Player {
 
     public Player (int x, int y)
     {
+        // TODO: Rotate player depending on direction of character
         position = new Vector3(x, y, 0);
         velocity = new Vector3(0, 0 ,0);
-        animationTexture = new Texture("playerAnimation.png");
+        animationTexture = new Texture("playerAnimationRight.png");
         playerAnimation = new Animation(new TextureRegion(animationTexture), 4, 0.5f);
         bounds = new Rectangle(x, y, animationTexture.getWidth() / 4, animationTexture.getHeight());
     }
@@ -34,6 +35,15 @@ public class Player {
     public void update(float dt)
     {
         if(movePlayer || (position.y > PLAYER_GROUND)){
+            if(direction == "right")
+            {
+                animationTexture = new Texture("playerAnimationRight.png");
+            }
+            else if(direction == "left")
+            {
+                animationTexture = new Texture("playerAnimationLeft.png");
+            }
+            playerAnimation = new Animation(new TextureRegion(animationTexture), 4, 0.5f);
             playerAnimation.update(dt);
         }
 
