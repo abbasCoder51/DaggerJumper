@@ -21,47 +21,45 @@ public class Player {
     public boolean movePlayer = false;
     public int movePlayerX;
     public String direction;
+    public Boolean directionChanged;
+    public Boolean animationActive;
 
     public Player (int x, int y)
     {
         // TODO: Rotate player depending on direction of character
+
+        // return direction
+        direction = "right";
+        animationActive = false;
+        directionChanged = true;
         position = new Vector3(x, y, 0);
         velocity = new Vector3(0, 0 ,0);
         animationTexture = new Texture("playerAnimationRight.png");
         playerAnimation = new Animation(new TextureRegion(animationTexture), 4, 0.5f);
         bounds = new Rectangle(x, y, animationTexture.getWidth() / 4, animationTexture.getHeight());
+
     }
 
     public void update(float dt)
     {
-        if(movePlayer || (position.y > PLAYER_GROUND)){
-            if(direction == "right")
-            {
-                animationTexture = new Texture("playerAnimationRight.png");
-            }
-            else if(direction == "left")
-            {
-                animationTexture = new Texture("playerAnimationLeft.png");
-            }
+
+        // Direction of character - right
+        if(returnDirection().equals("right") && returnDirectionChanged()){
+            animationTexture = new Texture("playerAnimationRight.png");
             playerAnimation = new Animation(new TextureRegion(animationTexture), 4, 0.5f);
-            playerAnimation.update(dt);
+            directionChanged(false);
+        }
+
+        // Direction of character - left
+        if(returnDirection().equals("left") && returnDirectionChanged()){
+            animationTexture = new Texture("playerAnimationLeft.png");
+            playerAnimation = new Animation(new TextureRegion(animationTexture), 4, 0.5f);
+            directionChanged(false);
         }
 
         if(position.y > PLAYER_GROUND)
         {
             velocity.add(0, GRAVITY, 0);
-        }
-        velocity.scl(dt);
-
-        if(movePlayer || (position.y > PLAYER_GROUND)) {
-            if(direction == "right")
-            {
-                position.add(MOVEMENT * dt, velocity.y, 0);
-            }
-            else if(direction == "left")
-            {
-                position.sub(MOVEMENT * dt, -velocity.y, 0);
-            }
         }
 
         if(position.y < PLAYER_GROUND)
@@ -70,6 +68,22 @@ public class Player {
             jumpCount = 0;
         }
 
+        if(movePlayer || (position.y > PLAYER_GROUND)) {
+            if(returnDirection().equals("right"))
+            {
+                position.add(MOVEMENT * dt, velocity.y, 0);
+            }
+            else if(returnDirection().equals("left"))
+            {
+                position.sub(MOVEMENT * dt, -velocity.y, 0);
+            }
+        }
+
+        if(animationActive){
+            playerAnimation.update(dt);
+        }
+
+//        velocity.scl(dt);
         velocity.scl(1/dt);
         bounds.setPosition(position.x, position.y);
     }
@@ -91,14 +105,26 @@ public class Player {
     }
 
     public void jump(){
-        velocity.y = 250;
+        velocity.y = 150;
         jumpCount++;
     }
 
-    public void move(boolean move, int x, String d){
+    public void move(boolean move, int x, String d, Boolean a){
         movePlayer = move;
         movePlayerX = x;
         direction = d;
+        animationActive = a;
+    }
+    public String returnDirection(){
+        return direction;
+    }
+
+    public void directionChanged(Boolean direction){
+        directionChanged = direction;
+    }
+
+    public Boolean returnDirectionChanged(){
+        return directionChanged;
     }
 
     public int jumpCount()
