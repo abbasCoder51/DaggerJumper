@@ -13,7 +13,9 @@ import java.util.Random;
 public class Gem {
 
     private static final int GRAVITY = 10;
-    private static final int MOVEMENT = 60;
+    private int MOVEMENT = 0;
+    private int movementMin = 50;
+    private int movementMax = 90;
     private Texture gem;
     private Vector2 position;
     private Vector3 velocity;
@@ -37,6 +39,8 @@ public class Gem {
             case 3: gem = new Texture("greenGem.png");
                 break;
         }
+
+        MOVEMENT = rand.nextInt( movementMax - movementMin + 1) + movementMin;
 
         int gemPosXValue = rand.nextInt(xMax - xMin + 1) + xMin;
         int gemPosYValue = rand.nextInt(xMax - xMin + 1) + xMin;
