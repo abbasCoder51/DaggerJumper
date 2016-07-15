@@ -110,7 +110,7 @@ public class PlayState extends State{
             gem.resposition(gem.getPosition().x, gem.getPosition().y);
 
             // check if gem collides with player or gem moves out of screen
-            if(gem.collides(player.getBounds()) || gem.getPosition().x <= 0){
+            if(gem.collides(player.getBounds()) || gem.getPosition().y <= 0){
 
                 // remove gem instance from list of array
                 gems.removeIndex(i);
