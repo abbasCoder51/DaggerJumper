@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.daggerrunner.game.DaggerJumper;
+import com.badlogic.gdx.utils.Timer;
 
 import java.util.Random;
 
@@ -29,18 +30,28 @@ public class Gem {
     private int yMax = 100;
 
     public Gem(){
+        Timer MovementTimer = new Timer();
         rand = new Random();
         int gemValue = rand.nextInt(max - min + 1) + min;
         switch(gemValue){
             case 1: gem = new Texture("redGem.png");
-                    break;
+                // MOVEMENT = 90;
+                break;
             case 2: gem = new Texture("blueGem.png");
+                // MOVEMENT = 60;
                 break;
             case 3: gem = new Texture("greenGem.png");
+                // MOVEMENT = 40;
                 break;
         }
 
-        MOVEMENT = rand.nextInt( movementMax - movementMin + 1) + movementMin;
+    MovementTimer.scheduleTask(new Timer.Task() {
+        @Override
+        public void run() {
+           MOVEMENT = rand.nextInt( movementMax - movementMin + 1) + movementMin;
+        }
+        }, 10
+    );
 
         int gemPosXValue = rand.nextInt(xMax - xMin + 1) + xMin;
         int gemPosYValue = rand.nextInt(xMax - xMin + 1) + xMin;
