@@ -17,17 +17,21 @@ public class Gem {
     private int MOVEMENT = 0;
     private int movementMin = 50;
     private int movementMax = 90;
+
     private Texture gem;
     private Vector2 position;
     private Vector3 velocity;
     private Rectangle bounds;
     private Random rand;
+
     private int min = 1;
     private int max = 3;
     private int xMin = 100;
     private int xMax = DaggerJumper.WIDTH/2;
     private int yMin = 0;
     private int yMax = 100;
+
+    private boolean pointGiven = false;
 
     public Gem(){
         Timer MovementTimer = new Timer();
@@ -50,7 +54,7 @@ public class Gem {
         public void run() {
            MOVEMENT = rand.nextInt( movementMax - movementMin + 1) + movementMin;
         }
-        }, 10
+        }, 1
     );
 
         int gemPosXValue = rand.nextInt(xMax - xMin + 1) + xMin;
@@ -81,6 +85,16 @@ public class Gem {
 
     public boolean collides (Rectangle player){
         return player.overlaps(bounds);
+    }
+
+    public boolean getPointGiven(){
+        return pointGiven;
+
+    }
+
+    public void pointGiven(){
+        pointGiven = true;
+
     }
 
     public void dispose(){
